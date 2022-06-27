@@ -6,6 +6,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.type.LocalDateTimeType;
+import org.hibernate.type.TimestampType;
+
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -31,5 +35,16 @@ public class Challenge {
     @Column(name="result")
     private int result;
 
+    @Basic(optional = false)
+    @Column(name = "currenttime", insertable = false, updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date currentTime;
 
+    public Challenge(String username, int leftCalculator, int rightCalculator, int result, Date currentTime) {
+        this.username = username;
+        this.leftCalculator = leftCalculator;
+        this.rightCalculator = rightCalculator;
+        this.result = result;
+        this.currentTime = currentTime;
+    }
 }

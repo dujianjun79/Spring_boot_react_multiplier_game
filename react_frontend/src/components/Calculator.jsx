@@ -1,34 +1,36 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
+import { useParams } from 'react-router-dom';
 import '../css/components.css';
 import DataService from '../services/DataService';
 import Board from './Board';
 
-const Calculator = () => {
-  const [num, setNum] = useState(5);
-  const [num2, setnum2] = useState(6);
-  const [name, setName] = useState('');
-  const [answer, setAnswer] = useState(0);
+export default function Calculator (){
+  const {username} = useParams();
+  const [num, setNum] = useState(Math.floor(Math.random()*20));
+  const [num2, setnum2] = useState(Math.floor(Math.random()*30));
+  const [name, setName] = useState(username);
+  const [answer, setAnswer] = useState("");
   const [data, setData] = useState(null)
-  const [record, setRecord] = useState(null)
 
   function randomNumberInRange(min, max) {
     // 👇️ get number between min (inclusive) and max (inclusive)
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
+  useEffect(() => {
+    DataService.getChallengebyName(name.toString()).then(response => setData(response.data));
+  },[data]);
+
   const handleClick = (event) => {
     
-  
-    setRecord({username: name, leftCalculator: num, rightCalculator:num2, result:answer})
-    DataService.postChallenge(record)
-    DataService.getChallengebyName(name.toString()).then((res)=>{
-      setData(res.data)
-    }); 
-
-    setNum(randomNumberInRange(1, 20));
-    setnum2(randomNumberInRange(1, 20));
-
-    event.preventDefault();
+    if (!isNaN(answer) && answer !=="" && name !=="") {
+      DataService.postChallenge({username: name, leftCalculator: num, rightCalculator:num2, result:answer});
+      setNum(randomNumberInRange(1, 50));
+      setnum2(randomNumberInRange(1, 50));
+      setAnswer("");
+      event.preventDefault();
+    }
+    
   };
   
   const nameInput = (event) => {
@@ -47,15 +49,14 @@ const Calculator = () => {
       <div >
         <label className='lay1'>{num}</label>
         <label className='lay1'>&times;</label>                             
-        <lable className='lay1'>{num2}</lable>
+        <label className='lay1'>{num2}</label>
       </div>      
         <div className='lay2  row'>
           <div className="col-xs-2">
-              <label for="name">Your alias</label>
-              <input type="text" value={name} name="name" id="name" className='form-control' 
-                        onChange={nameInput} />
+              <input type="text" placeholder={name} value={name} name="name" id="name" className='form-control' 
+                        onChange={nameInput} disabled/>
               <p>
-                  <label for="guess">Your guess</label>
+                  <label htmlFor="guess">Your guess</label>
                   <input type="text" value={answer} name="guess" id="guess" className='form-control' 
                     onChange={answerInput} />
               </p>
@@ -69,5 +70,3 @@ const Calculator = () => {
     </div>
   );
 };
-
-export default Calculator;

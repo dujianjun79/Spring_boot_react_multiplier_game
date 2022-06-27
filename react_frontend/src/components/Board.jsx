@@ -7,7 +7,6 @@ function Board(props) {
     }
     const data = props.data
     const name = props.name
-    console.log(data)
     if(data !== null && data.length){
       return (
         <div className='ex1'>
@@ -18,7 +17,8 @@ function Board(props) {
                 <tr>
                   <th>calculator left</th>
                   <th>calculator right</th>
-                  <th>result</th>
+                  <th >result</th>
+                  <th>correct result</th>
                 </tr>
               </thead>
               <tbody>
@@ -28,12 +28,12 @@ function Board(props) {
                     <tr key={row.id}>
                       <td >{row.leftCalculator}</td>
                       <td >{row.rightCalculator}</td>
-                      <td >{row.result}</td>
+                      <td style={row.leftCalculator*row.rightCalculator!==row.result ? {color:'red'} : {}}>{row.result}</td>
+                      <td >{row.leftCalculator*row.rightCalculator!==row.result ? row.leftCalculator*row.rightCalculator:null}</td>
                     </tr>
                   )
                 }
-              </tbody>
-                
+              </tbody>    
             </table>
           </div>
         </div>

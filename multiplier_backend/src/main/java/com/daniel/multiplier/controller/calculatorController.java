@@ -8,18 +8,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000", methods = {RequestMethod.GET, RequestMethod.POST} )
 public class calculatorController {
     @Autowired
     ChallengeService challengeService;
 
     @GetMapping("{name}")
     public List<Challenge> saveResult(@PathVariable(name="name") String name){
-        return challengeService.findallbyId(name);
+        return challengeService.findallbyName(name);
     }
 
     @PostMapping("/save")
-    public Challenge save(@RequestBody Challenge challenge){
+    public  Challenge save(@RequestBody Challenge challenge){
 
         return challengeService.createChallenge(challenge);
     }

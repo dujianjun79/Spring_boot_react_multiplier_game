@@ -28,3 +28,52 @@
 button {
     width: 70px;
 }
+
+label {
+    font-size: large;
+    font-weight: bold;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    margin-right: 10px;
+}
+
+.inline {
+    width: unset;
+    margin: 0 0.5em 0 0;
+    vertical-align: middle;
+  }
+
+#sex {
+    display: block;
+}
+
+.signup {
+    text-align: left;
+    color: rgb(111, 94, 154);
+    margin-bottom: 30px;
+}
+
+select { 
+    height: 2em;
+    width: 11.5em;
+}
+
+.submit {
+    margin-top: 15px;
+}
+
+.alert {
+    display:flex;
+    margin: 0;
+    padding:0;
+    color: red;
+}
+
+.alert span {
+    align-self: flex-end;
+}
+
+.btn {
+    margin-right: 15px;
+}
+
