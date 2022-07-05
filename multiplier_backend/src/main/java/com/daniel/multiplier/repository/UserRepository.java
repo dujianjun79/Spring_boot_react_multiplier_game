@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User,Long> {
@@ -18,4 +19,6 @@ public interface UserRepository extends JpaRepository<User,Long> {
     @Query(value = "SELECT * FROM USER WHERE EMAIL = ?1",
             nativeQuery = true)
     List<User> findUserByEmail(String email);
+
+    Optional<User> findByUsername(String username);
 }
